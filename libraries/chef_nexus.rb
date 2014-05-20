@@ -212,9 +212,10 @@ class Chef
         end
 
         def encrypted_data_bag_item(data_bag, data_bag_item)
-          raise "alan #{data_bag.inspect}| #{data_bag_item}"
           Mash.from_hash(Chef::EncryptedDataBagItem.load(data_bag, data_bag_item).to_hash)
         rescue Net::HTTPServerException => e
+          nil
+        rescue Chef::Exceptions::ValidationFailed => e
           nil
         end
     end
